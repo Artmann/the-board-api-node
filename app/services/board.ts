@@ -20,4 +20,14 @@ export default class BoardService {
 
     return null;
   }
+
+  async findByUserId(userId: string) {
+    try {
+      return await Board.find({ userId });
+    } catch (error) {
+      this.logger.error(error, { userId });
+    }
+
+    return [];
+  }
 }

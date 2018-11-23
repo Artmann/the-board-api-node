@@ -1,8 +1,8 @@
 
-const respond = (key: string, collection, fn: Function): Object => {
+const respond = (key: string, fn: Function, collection, ...params): Object => {
   const response = {};
 
-  response[key] = Array.isArray(collection) ? collection.map(c => fn(c)) : fn(collection);
+  response[key] = Array.isArray(collection) ? collection.map(c => fn(c, ...params)) : fn(collection, ...params);
 
   return response;
 };

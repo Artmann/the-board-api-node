@@ -3,9 +3,10 @@ import Logger from '../utils/logger';
 import UserService from '../services/user';
 import respond from '../utils/respond';
 import userResponse from '../responses/user';
+import BoardService from '../services/board';
 
 class Users {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private boardService: BoardService) {}
 
   async create(request: Request, response: Response) {
     const { email, name, password } = request.body;
@@ -19,26 +20,33 @@ class Users {
     }
 
     const user = await this.userService.create(email, password, name); 
+    const boards = await this.boardService.findByUserId(user.id);
 
     if (!user) {
       return response.status(500).send({ error: 'Could not create user' });
     }
 
-    response.send(respond('user', user, userResponse));
+    response.send(respond('user', userResponse, user, boards));
   }
 
   async show(request: Request, response: Response) {
     const { id } = request.params;
     
     const user = await this.userService.find(id);
-
     if (!user) {
       return response.status(404).send();
     }
 
-    response.send(respond('user', user, userResponse));
+    const boards = await this.boardService.findByUserId(user.id);
+
+    response.send(respond('user', userResponse, user, boards));
   }
 
 }
 
-export default new Users(new UserService(new Logger()));
+const logger = new Logger();
+
+export default new Users(
+  new UserService(logger),
+  new BoardService(logger)
+);
