@@ -4,6 +4,7 @@ import { config } from 'dotenv';
 import * as mongoose from 'mongoose';
 import router from './routes';
 import users from './controllers/users';
+import sessions from './controllers/sessions';
 
 class App {
   public app: express.Application;
@@ -15,6 +16,7 @@ class App {
 
     this.container = {};
     this.container["users"] = users;
+    this.container["sessions"] = sessions;
 
     this.app = express();
     
