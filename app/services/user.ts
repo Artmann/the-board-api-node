@@ -1,6 +1,7 @@
 import { hash } from 'bcrypt';
 import Logger from '../utils/logger';
 import User from '../models/user';
+import BoardService from './board';
 
 export default class UserService {
   private logger: Logger;
@@ -21,6 +22,8 @@ export default class UserService {
       const hashedPassword = await hash(password, 512);
       const user = await User.create({ email, password: hashedPassword, name });
       this.logger.info('User created', { id: user.id, email, name });
+
+      new BoardService(this.logger).create(user.id);
 
       return user;
     } catch (error) {
