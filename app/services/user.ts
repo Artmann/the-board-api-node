@@ -23,7 +23,7 @@ export default class UserService {
 
       return user;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error, { email, name });
     }
 
     return null;
@@ -35,7 +35,7 @@ export default class UserService {
 
       return user;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error, { id });
     }
 
     return null;

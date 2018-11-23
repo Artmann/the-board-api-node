@@ -1,9 +1,9 @@
 export default class Logger {
-  info(message) {
-    console.log(message);
+  info(message, fields: Object = {}) {
+    console.log(message, fields);
   }
 
-  error(message) {
-    console.error(message);
+  error(message, fields: Object = {}) {
+    console.error(message, fields);
   }
 }
