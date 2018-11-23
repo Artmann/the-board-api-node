@@ -20,6 +20,7 @@ export default class UserService {
       
       const hashedPassword = await hash(password, 512);
       const user = await User.create({ email, password: hashedPassword, name });
+      this.logger.info('User created', { id: user.id, email, name });
 
       return user;
     } catch (error) {
