@@ -27,7 +27,7 @@ class App {
 
   private database(): void {
     (<any>mongoose).Promise = global.Promise;
-    mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost:27017/the-board');
+    mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/the-board');
   }
 
   private routes(): void {
