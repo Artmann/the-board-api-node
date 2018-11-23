@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import Logger from '../utils/logger';
-import User from '../models/user';
 import UserService from '../services/user';
+import respond from '../utils/respond';
+import userResponse from '../responses/user';
 
 class Users {
   constructor(private userService: UserService) {}
@@ -23,7 +24,7 @@ class Users {
       return response.status(500).send({ error: 'Could not create user' });
     }
 
-    response.send({ user });
+    response.send(respond('user', user, userResponse));
   }
 
   async show(request: Request, response: Response) {
@@ -35,7 +36,7 @@ class Users {
       return response.status(404).send();
     }
 
-    response.send({ user });
+    response.send(respond('user', user, userResponse));
   }
 
 }
