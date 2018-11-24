@@ -8,9 +8,12 @@ class Sessions {
   async create(request: Request, response: Response) {
     const { email, password } = request.body;
    
-    const session = { token: '123' };
-    
-    response.send({ session });
+    const session = await this.userService.createSession(email, password);
+    if (session) {
+      return response.send({ session });
+    }
+
+    response.status(301).send();
   }
 }
 
