@@ -4,6 +4,7 @@ import User from '../models/user';
 import Session from '../models/session';
 import BoardService from './board';
 import { v4 as uuid } from 'uuid';
+import { userInfo } from 'os';
 
 const authorize = async (email, password) => {
   const user = await User.findOne({ email });
@@ -23,6 +24,22 @@ export default class UserService {
 
   constructor(logger: Logger) {
     this.logger = logger;
+  }
+
+  async authenticate(token: string): Promise<object> {
+    try {
+      const session = await Session.findOne({ token });
+      if (!session) {
+        this.logger.error('Authentication failed', { token });
+        return null;
+      }
+
+      return await this.find((<any>session).userId);
+    } catch (error) {
+      this.logger.error('Authentication failed', { token });
+    }
+
+    return null;
   }
 
   async create(email: string, password: string, name: string) {

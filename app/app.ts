@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 import router from './routes';
 import users from './controllers/users';
 import sessions from './controllers/sessions';
+import auth from './middleware/auth';
 
 class App {
   public app: express.Application;
@@ -22,6 +23,7 @@ class App {
     
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(auth);
 
     this.database();
     this.routes();
