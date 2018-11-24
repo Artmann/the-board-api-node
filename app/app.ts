@@ -3,8 +3,9 @@ import * as bodyParser from 'body-parser';
 import { config } from 'dotenv';
 import * as mongoose from 'mongoose';
 import router from './routes';
-import users from './controllers/users';
+import boards from './controllers/boards';
 import sessions from './controllers/sessions';
+import users from './controllers/users';
 import auth from './middleware/auth';
 
 class App {
@@ -18,6 +19,7 @@ class App {
     this.container = {};
     this.container["users"] = users;
     this.container["sessions"] = sessions;
+    this.container["boards"] = boards;
 
     this.app = express();
     
