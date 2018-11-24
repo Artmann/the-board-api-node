@@ -21,7 +21,7 @@ export default class BoardService {
     return null;
   }
 
-  async findByUserId(userId: string) {
+  async findByUserId(userId: string): Promise<Array<any>> {
     try {
       return await Board.find({ userId });
     } catch (error) {
